@@ -9,6 +9,8 @@ export default class extends BaseSchema {
       table.string('usuario', 255).notNullable().unique()
       table.string('password', 180).notNullable()
       table.string('remember_me_token').nullable()
+      table.integer('rol_id').unsigned().notNullable()
+      table.foreign('rol_id').references('roles.id').onDelete('CASCADE').onUpdate('CASCADE')
       table.string('nombre', 255).notNullable()
       table.string('apellido_paterno', 255).notNullable()
       table.string('apellido_materno', 255).nullable()

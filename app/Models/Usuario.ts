@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import Rol from './Rol'
 
 export default class Usuario extends BaseModel {
   @column({ isPrimary: true })
@@ -11,6 +12,9 @@ export default class Usuario extends BaseModel {
 
   @column({ serializeAs: null })
   public password: string
+
+  @column({ serializeAs: 'rolId' })
+  public rolId: number
 
   @column({ serializeAs: null })
   public rememberMeToken: string | null
@@ -39,4 +43,10 @@ export default class Usuario extends BaseModel {
       registro.usuario = registro.usuario.toLowerCase()
     }
   }
+
+  @belongsTo(() => Rol, {
+    localKey: 'id',
+    foreignKey: 'rolId',
+  })
+  public rol: BelongsTo<typeof Rol>
 }

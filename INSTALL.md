@@ -8,8 +8,7 @@ Copiar el archivo _.env.example_ a _.env_ y mnodificar los datos para la conexi√
 
 ```sh
 yarn install
-node ace migration:run
-node ace db:seed
+node ace migration:fresh --seed
 ```
 
 ## Iniciar el servidor API
