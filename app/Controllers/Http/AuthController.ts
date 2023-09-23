@@ -47,7 +47,7 @@ export default class AuthController {
       return response.status(422).send({
         message: 'Acceso denegado',
         errors: {
-          nombre: ['Usuario inexistente'],
+          usuario: ['Usuario inexistente'],
         },
       })
     }

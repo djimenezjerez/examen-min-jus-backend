@@ -8,6 +8,7 @@ Route.group(() => {
       Route.post('logout', 'AuthController.logout')
 
       Route.group(() => {
+        Route.resource('roles', 'RolesController')
         Route.resource('usuarios', 'UsuariosController')
       }).middleware(['rol:ADMINISTRADOR'])
     }).middleware('auth')

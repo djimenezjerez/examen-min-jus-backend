@@ -110,7 +110,8 @@ export default class UsuariosController {
             whereNot: { id: usuario.id },
           }),
         ]),
-        password: schema.string.nullable([
+        password: schema.string.optional([
+          rules.minLength(0),
           rules.maxLength(255),
           rules.trim(),
         ]),
