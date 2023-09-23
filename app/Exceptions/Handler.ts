@@ -8,7 +8,11 @@ export default class ExceptionHandler extends HttpExceptionHandler {
   }
 
   public async handle(error: any, ctx: HttpContextContract) {
-    if (error.code === 'E_ROW_NOT_FOUND') {
+    if (error.code === 'E_UNAUTHORIZED_ACCESS') {
+      return ctx.response.status(401).send({
+        message: 'Acceso no autorizado',
+      })
+    } else if (error.code === 'E_ROW_NOT_FOUND') {
       return ctx.response.status(404).send({
         message: 'Registro inexistente',
       })
