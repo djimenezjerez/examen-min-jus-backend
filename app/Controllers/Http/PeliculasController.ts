@@ -12,7 +12,7 @@ export default class PeliculasController {
     const porPagina = request.input('porPagina') || 10
     const buscar = request.input('buscar') || ''
 
-    const registros = await Database.from('pelicula_usuarios').select('pelicula_usuarios.usuario_id as usuarioId', 'peliculas.id', 'peliculas.id_imdb as imdbID', 'peliculas.titulo as Title', 'peliculas.poster as Poster').leftJoin('peliculas', 'pelicula_usuarios.pelicula_id', '=', 'peliculas.id').where('pelicula_usuarios.usuario_id', usuario.id).where('peliculas.titulo', 'ilike', `%${buscar}%`).orderBy('peliculas.titulo', 'asc').paginate(pagina, porPagina)
+    const registros = await Database.from('pelicula_usuarios').select('pelicula_usuarios.usuario_id as usuarioId', 'peliculas.id', 'peliculas.id_imdb as imdbID', 'peliculas.titulo as Title', 'peliculas.poster as Poster').leftJoin('peliculas', 'pelicula_usuarios.pelicula_id', '=', 'peliculas.id').whereRaw('pelicula_usuarios.deleted_at IS NULL').where('pelicula_usuarios.usuario_id', usuario.id).where('peliculas.titulo', 'ilike', `%${buscar}%`).orderBy('peliculas.titulo', 'asc').paginate(pagina, porPagina)
     registros.namingStrategy = {
       paginationMetaKeys() {
         return {
