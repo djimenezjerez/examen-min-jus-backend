@@ -12,7 +12,7 @@ export default class Usuario extends BaseModel {
   @column({ serializeAs: null })
   public password: string
 
-  @column()
+  @column({ serializeAs: null })
   public rememberMeToken: string | null
 
   @column()
@@ -24,16 +24,19 @@ export default class Usuario extends BaseModel {
   @column({ serializeAs: 'apellidoMaterno' })
   public apellidoMaterno: string | null
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: 'createdAt' })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: 'updatedAt' })
   public updatedAt: DateTime
 
   @beforeSave()
-  public static async hashPassword (usuario: Usuario) {
-    if (usuario.$dirty.password) {
-      usuario.password = await Hash.make(usuario.password)
+  public static async hashPassword (registro: Usuario) {
+    if (registro.$dirty.password) {
+      registro.password = await Hash.make(registro.password)
+    }
+    if (registro.$dirty.usuario) {
+      registro.usuario = registro.usuario.toLowerCase()
     }
   }
 }
