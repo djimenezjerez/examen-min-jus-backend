@@ -6,6 +6,7 @@ Route.group(() => {
 
     Route.group(() => {
       Route.post('logout', 'AuthController.logout')
+      Route.resource('peliculas', 'PeliculasController')
 
       Route.group(() => {
         Route.resource('roles', 'RolesController')

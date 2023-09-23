@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, belongsTo, BelongsTo, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Rol from './Rol'
+import Pelicula from './Pelicula'
 
 export default class Usuario extends BaseModel {
   @column({ isPrimary: true })
@@ -49,4 +50,14 @@ export default class Usuario extends BaseModel {
     foreignKey: 'rolId',
   })
   public rol: BelongsTo<typeof Rol>
+
+  @manyToMany(() => Pelicula, {
+    localKey: 'id',
+    relatedKey: 'id',
+    pivotForeignKey: 'usuario_id',
+    pivotRelatedForeignKey: 'pelicula_id',
+    pivotTable: 'pelicula_usuarios',
+    pivotColumns: ['usuario_id', 'pelicula_id', 'deleted_at'],
+  })
+  public peliculas: ManyToMany<typeof Pelicula>
 }
